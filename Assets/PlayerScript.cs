@@ -15,7 +15,14 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float moveSpeed = 3.0f;
+        // ゲームクリアで移動しない
+        if (GoalScript.isGameClear == true)
+        {
+            return;
+        }
+
+
+            float moveSpeed = 3.0f;
 
         // 移動量を獲得
         Vector3 v = rb.velocity;
@@ -47,6 +54,12 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        // ゲームクリアで移動しない
+        if (GoalScript.isGameClear == true)
+        {
+            return;
+        }
+
         float jumpSpeed = 8.0f;
 
         // 移動量を獲得

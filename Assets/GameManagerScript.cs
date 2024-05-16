@@ -1,10 +1,15 @@
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject block;
+    public GameObject goal;
+
     int[,] map =
    {
         {1,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,1},
@@ -18,24 +23,42 @@ public class GameManagerScript : MonoBehaviour
         {1,0,0,0,0,1,1,1,0,0, 0,3,0,0,0,1,1,1,1,1, 0,0,0,0,3,0,3,0,0,0, 0,0,0,3,0,0,0,0,0,1},
         {1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1},
     };
+    
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        // ゲーム画面のサイズを指定
+        Screen.SetResolution(1920, 1080, false);
+
         Vector3 position = Vector3.zero;
+
+        // 配列のサイズを取得
         int lenY = map.GetLength(0);
         int lenX = map.GetLength(1);
 
+        // 縦横で２重ループ
         for (int y = 0; y < lenY; y++)
         {
             for (int x = 0; x < lenX; x++)
             {
                 position.x = x-3;
                 position.y = -y + 5;
+                //  ブロック生成
                 if (map[y, x] == 1)
                 {
                     Instantiate(block, position, Quaternion.identity);
                 }
+                // ゴール位置設定
+                if (map[y, x] == 2)
+                {
+                    goal.transform.position = position;
+                }
+
             }
         }
     }
@@ -43,6 +66,19 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        // ゲームクリアでスペースキーでタイトルへ移行
+        if (GoalScript.isGameClear == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene("TitleScene");
+            }
+        }
+
+
     }
 }
+
+
+
