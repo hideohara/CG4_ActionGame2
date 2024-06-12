@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class TitleManagerScript : MonoBehaviour
 {
+    public GameObject hitKey;
+    private int timer = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +21,17 @@ public class TitleManagerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene("SampleScene");
+        }
+
+        // タイマーにより「Hit Space Key」が点滅
+        timer++;
+        if (timer % 100 > 50)
+        {
+            hitKey.SetActive(false);
+        }
+        else
+        {
+            hitKey.SetActive(true);
         }
 
     }
